@@ -2,6 +2,6 @@
 
 set -e
 
-pip install -e .
-pip install pre-commit
+uv pip install --system -e .
+uv pip install --system pre-commit
 pre-commit run --all-files
