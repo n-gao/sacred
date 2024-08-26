@@ -73,8 +73,10 @@ jobs:
           python-version: ${{ matrix.env.python }}
       - name: Install uv
         run: curl -LsSf https://astral.sh/uv/install.sh | sh
+      - name: Install tox
+        run: uv pip install --system tox-uv
       - name: Test with tox against environments ${{ matrix.env.tox }}
-        run: uvx --python ${{ matrix.env.python }} --with tox-uv tox -e ${{ matrix.env.tox }}
+        run: python -m tox -e ${{ matrix.env.tox }}
   test_pre_commit:
     runs-on: ubuntu-latest
     steps:
@@ -94,8 +96,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install uv
         run: curl -LsSf https://astral.sh/uv/0.3.3/install.sh | sh
+      - name: Install tox
+        run: uv pip install --system tox-uv
       - name: Run coverage tox job
-        run: uvx --with tox-uv tox -e coverage
+        run: python -m tox -e coverage
   setup:
     strategy:
       fail-fast: false
@@ -106,5 +110,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install uv
         run: curl -LsSf https://astral.sh/uv/0.3.3/install.sh | sh
-      - name: Run setup tox job
-        run: uvx --with tox-uv tox -e coverage
+      - name: Install tox
+        run: uv pip install --system tox-uv
+      - name: Run coverage tox job
+        run: python -m tox -e setup
